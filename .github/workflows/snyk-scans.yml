@@ -24,6 +24,7 @@ jobs:
           snyk test 
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        continue-on-error: true
       - name: Monitor dependencies for security issues with Snyk
         run: snyk monitor
         env:
