@@ -1,4 +1,4 @@
-name: Snyk Full Platform
+name: Snyk Full Platform (CLI)
 
 on:
   push:
@@ -20,6 +20,7 @@ jobs:
           mv ./snyk /usr/local/bin/
       - name: Authenticate and run Snyk Open Source Scan + Monitor
         run: | 
+          npm install snyk -g
           snyk auth ${{ secrets.SNYK_TOKEN }}
           snyk test
           snyk monitor
@@ -54,14 +55,19 @@ jobs:
     - name: Scan and Monitor Docker Vulnerabilities
       run: |   
         snyk auth ${{ secrets.SNYK_TOKEN }}
-        snyk container test juice-shop --file=Dockerfile
-        snyk container monitor juice-shop --file=Dockerfile
+        snyk container test boosef-juiceshop:latest --file=Dockerfile
+        snyk container monitor boosef-juiceshop:latest --file=Dockerfile
      
   snyk-iac:
     environment: snyk
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    - name: Install Snyk CLI
+      run: |
+        wget -O snyk https://static.snyk.io/cli/latest/snyk-linux
+        chmod +x ./snyk
+        mv ./snyk /usr/local/bin/
     - name: Run and monitor Snyk to check configuration files for security issues
       run: |   
         snyk auth ${{ secrets.SNYK_TOKEN }}
