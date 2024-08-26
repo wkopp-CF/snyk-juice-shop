@@ -20,8 +20,7 @@ jobs:
       - uses: snyk/actions/setup@master
       - name: Snyk OS Test
         run: | 
-          npm install
-          npm i -g snyk
+          npm install snyk
           snyk test 
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
