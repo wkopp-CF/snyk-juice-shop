@@ -1,0 +1,76 @@
+name: Snyk Full Platform
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  snyk-os:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.4
+      - uses: snyk/actions/setup@master
+      - name: Snyk Test
+        run: snyk test 
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Monitor dependencies for security issues with Snyk
+        run: snyk monitor
+        env:
+          SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
+
+jobs:
+
+  snyk-code:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - uses: snyk/actions/setup@master
+      - name: Snyk Code Test
+        continue-on-error: true
+        run: snyk code test --sarif > snyk_sarif
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+jobs:
+
+  snyk-container:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag boosef-juiceshop:latest
+    - name: Monitor Docker Vulnerabilities
+      uses: snyk/actions/docker@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        image: boosef-juiceshop:latest
+        command: monitor
+
+jobs:
+
+  snyk-iac:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Snyk to check configuration files for security issues
+        continue-on-error: true
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        command: report
