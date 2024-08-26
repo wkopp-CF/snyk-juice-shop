@@ -62,8 +62,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-   - name: Run and monitor Snyk to check configuration files for security issues
-     run: |   
+    - name: Run and monitor Snyk to check configuration files for security issues
+      run: |   
         snyk auth ${{ secrets.SNYK_TOKEN }}
         snyk iac test --report
  
