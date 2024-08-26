@@ -8,9 +8,7 @@ on:
 
 jobs:
   snyk-os:
-  
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@master
       - name: Use Node.js
@@ -28,11 +26,8 @@ jobs:
           SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
 
 jobs:
-
   snyk-code:
-  
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v2
       - uses: snyk/actions/setup@master
@@ -43,11 +38,8 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
 jobs:
-
   snyk-container:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
@@ -61,11 +53,8 @@ jobs:
         command: monitor
 
 jobs:
-
   snyk-iac:
-  
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v2
       - name: Run Snyk to check configuration files for security issues
