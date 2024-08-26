@@ -9,6 +9,7 @@ on:
 jobs:
 
   snyk-os:
+    environment: snyk
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -27,6 +28,7 @@ jobs:
           SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
 
   snyk-code:
+    environment: snyk
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -38,6 +40,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   snyk-container:
+    environment: snyk
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -52,6 +55,7 @@ jobs:
         command: monitor
 
   snyk-iac:
+    environment: snyk
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
