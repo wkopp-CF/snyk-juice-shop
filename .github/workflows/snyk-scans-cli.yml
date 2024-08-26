@@ -1,5 +1,9 @@
 name: Snyk Full Platform (CLI)
 
+# Prerequisites:
+# - Set a SNYK_TOKEN under env secrets in an env called "Snyk"
+# - If you are not running the scan on your default org in Snyk, set the org id in a secret called SNYK_ORG in the same env as above (env called "Snyk") and add an additional --org=${{ secrets.SNYK_ORG }} parameter in all the test commands 
+
 on:
   push:
     branches: [ "master" ]
