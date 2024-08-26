@@ -19,9 +19,10 @@ jobs:
           node-version: 18.4
       - uses: snyk/actions/setup@master
       - name: Snyk OS Test
-      - run: npm install
-      - run: npm i -g snyk
-      - run: snyk test 
+        run: | 
+          npm install
+          npm i -g snyk
+          snyk test 
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       - name: Monitor dependencies for security issues with Snyk
