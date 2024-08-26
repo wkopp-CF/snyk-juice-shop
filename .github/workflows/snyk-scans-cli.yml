@@ -20,7 +20,7 @@ jobs:
           mv ./snyk /usr/local/bin/
       - name: Authenticate and run Snyk Open Source Scan + Monitor
         run: | 
-          npm install snyk -g
+          npm install
           snyk auth ${{ secrets.SNYK_TOKEN }}
           snyk test
           snyk monitor
